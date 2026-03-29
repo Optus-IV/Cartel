@@ -1,13 +1,14 @@
 -- =============================================
--- Cherax Main Script - GitHub Update Ready
--- Version: 1.0.0          ← Change this when you update!
+-- Cartel Main Script
+-- GitHub Auto-Update Ready
+-- Version: 1.0.1          ← Update this when you release changes!
 -- =============================================
 
 local SCRIPT_NAME    = "Cartel"
-local SCRIPT_VERSION = "0.0.1"   -- ← Always update this when releasing a new version
+local SCRIPT_VERSION = "1.0.1"
 
 local function ShowToast(title, text, duration)
-    GUI.AddToast(title, text, duration or 6000, eToastPos.TOP_RIGHT)
+    GUI.AddToast(title, text, duration or 5000, eToastPos.TOP_RIGHT)
 end
 
 local function InitializeGUI()
@@ -16,32 +17,32 @@ local function InitializeGUI()
 
     mainTab:AddSeperator("Script Information")
     
-    local verFeature = FeatureMgr.AddFeature(joaat("main_version"), "Script Version", eFeatureType.InputText, "")
+    local verFeature = FeatureMgr.AddFeature(joaat("cartel_version"), "Script Version", eFeatureType.InputText, "")
     FeatureMgr.SetFeatureString(verFeature, SCRIPT_VERSION)
 
-    -- ===================== YOUR FEATURES GO HERE =====================
+    mainTab:AddSeperator("Features")
     
-    mainTab:AddSeperator("Your Features")
+    -- Example features (uncomment and customize as needed)
+    local godmode   = FeatureMgr.AddFeature(joaat("godmode"),   "Godmode",         eFeatureType.Toggle, "Local player is invincible")
+    local infAmmo   = FeatureMgr.AddFeature(joaat("inf_ammo"),  "Infinite Ammo",   eFeatureType.Toggle, "")
+    local infArmor  = FeatureMgr.AddFeature(joaat("inf_armor"), "Infinite Armor",  eFeatureType.Toggle, "")
     
-    local godmode = FeatureMgr.AddFeature(joaat("godmode"), "Godmode", eFeatureType.Toggle, "Makes local player invincible")
-    local infAmmo = FeatureMgr.AddFeature(joaat("inf_ammo"), "Infinite Ammo", eFeatureType.Toggle, "")
+    -- Add your own features below this line
+    -- local vehicleSpawner = FeatureMgr.AddFeature(joaat("veh_spawner"), "Vehicle Spawner", eFeatureType.Button, "")
     
-    -- Add more features below as needed...
-    
-    -- =================================================================
 end
 
 local function MainLoop()
     while not ShouldUnload() do
-        -- Put your looped logic here if needed
+        -- Put any continuous logic here (e.g. loops for ESP, protections, etc.)
         
         Script.Yield(500)
     end
 end
 
 local function OnLoad()
-    Logger.LogInfo(SCRIPT_NAME .. " v" .. SCRIPT_VERSION .. " loaded.")
-    ShowToast(SCRIPT_NAME, "Successfully loaded - Version " .. SCRIPT_VERSION, 5000)
+    Logger.LogInfo(SCRIPT_NAME .. " v" .. SCRIPT_VERSION .. " loaded successfully.")
+    ShowToast(SCRIPT_NAME, "Loaded - Version " .. SCRIPT_VERSION, 5000)
     
     InitializeGUI()
     
