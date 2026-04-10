@@ -1,51 +1,55 @@
 -- =============================================
 -- Cartel Main Script
 -- GitHub Auto-Update Ready
--- Version: 1.0.1          ← Update this when you release changes!
+-- Version: 1.0.2
 -- =============================================
 
 local SCRIPT_NAME    = "Cartel"
-local SCRIPT_VERSION = "1.0.1"
+local SCRIPT_VERSION = "1.0.2"
+
+local ui = cherax.require("ui")        -- CHERAXLIB UI library
 
 local function ShowToast(title, text, duration)
-    GUI.AddToast(title, text, duration or 5000, eToastPos.TOP_RIGHT)
+    ui.notify(title, text, duration or 6000)
 end
 
-local function InitializeGUI()
-    local rootTab = ListGUI.GetRootTab()
-    local mainTab = rootTab:AddSubTab(SCRIPT_NAME, "Main Features")
+local function InitializeFeatures()
+    -- Simple quick buttons using CHERAXLIB (these appear in the menu)
+    ui.quickButton("cartel_godmode",    "Godmode",           "Toggle local player invincibility", function()
+        -- Add your godmode logic here
+        ShowToast("Godmode", "Feature not implemented yet", 4000)
+    end)
 
-    mainTab:AddSeperator("Script Information")
-    
-    local verFeature = FeatureMgr.AddFeature(joaat("cartel_version"), "Script Version", eFeatureType.InputText, "")
-    FeatureMgr.SetFeatureString(verFeature, SCRIPT_VERSION)
+    ui.quickButton("cartel_inf_ammo",   "Infinite Ammo",     "Toggle infinite ammunition", function()
+        ShowToast("Infinite Ammo", "Feature not implemented yet", 4000)
+    end)
 
-    mainTab:AddSeperator("Features")
-    
-    -- Example features (uncomment and customize as needed)
-    local godmode   = FeatureMgr.AddFeature(joaat("godmode"),   "Godmode",         eFeatureType.Toggle, "Local player is invincible")
-    local infAmmo   = FeatureMgr.AddFeature(joaat("inf_ammo"),  "Infinite Ammo",   eFeatureType.Toggle, "")
-    local infArmor  = FeatureMgr.AddFeature(joaat("inf_armor"), "Infinite Armor",  eFeatureType.Toggle, "")
-    
-    -- Add your own features below this line
-    -- local vehicleSpawner = FeatureMgr.AddFeature(joaat("veh_spawner"), "Vehicle Spawner", eFeatureType.Button, "")
-    
+    ui.quickButton("cartel_inf_armor",  "Infinite Armor",    "Toggle infinite armor", function()
+        ShowToast("Infinite Armor", "Feature not implemented yet", 4000)
+    end)
+
+    -- Add more features below using ui.quickButton(...)
 end
 
 local function MainLoop()
     while not ShouldUnload() do
-        -- Put any continuous logic here (e.g. loops for ESP, protections, etc.)
-        
+        -- Put continuous logic here (ESP, protections, etc.)
+        -- Example:
+        -- if godmode_enabled then
+        --     PED.SET_PED_MAX_HEALTH(PLAYER.PLAYER_PED_ID(), 999999)
+        -- end
+
         Script.Yield(500)
     end
 end
 
 local function OnLoad()
     Logger.LogInfo(SCRIPT_NAME .. " v" .. SCRIPT_VERSION .. " loaded successfully.")
-    ShowToast(SCRIPT_NAME, "Loaded - Version " .. SCRIPT_VERSION, 5000)
     
-    InitializeGUI()
-    
+    ShowToast(SCRIPT_NAME, "Loaded successfully - Version " .. SCRIPT_VERSION, 8000)
+
+    InitializeFeatures()
+
     Script.QueueJob(function()
         MainLoop()
     end)
